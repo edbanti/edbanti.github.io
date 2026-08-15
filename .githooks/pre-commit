@@ -1,0 +1,44 @@
+#!/bin/sh
+# Blocks secrets and PII from reaching this public repo.
+# Enabled via: git config core.hooksPath .githooks
+# Bypass a false positive with: git commit --no-verify
+#
+# Portability note: this machine's `grep` is ugrep, which rejects `\+` in ERE
+# mode. Added-line filtering uses awk, and patterns avoid backslash escapes
+# that differ between grep flavours.
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+added=$(git diff --cached -U0 -- $staged | awk '/^\+\+\+/ { next } /^\+/ { print }')
+[ -z "$added" ] && exit 0
+
+fail=0
+
+check() {
+  hits=$(printf '%s\n' "$added" | grep -niE "$2" 2>/dev/null)
+  if [ -n "$hits" ]; then
+    echo "BLOCKED: $1"
+    printf '%s\n' "$hits" | head -5 | sed 's/^/  /'
+    echo
+    fail=1
+  fi
+}
+
+check "email address"      '[a-z0-9._%+-]+@[a-z0-9.-]+[.](com|net|org|io|dev|de|co|edu|gov)'
+check "GitHub token"       '(gho_|ghp_|ghu_|ghs_|ghr_|github_pat_)[A-Za-z0-9_]{20,}'
+check "AWS access key"     'AKIA[0-9A-Z]{16}'
+check "Slack token"        'xox[baprs]-[A-Za-z0-9-]{10,}'
+check "private key block"  'BEGIN ([A-Z]+ )?PRIVATE KEY'
+check "assigned secret"    '(api[_-]?key|secret|passwd|password|access[_-]?token|auth[_-]?token|bearer)[[:space:]]*[:=][[:space:]]*[^[:space:]]{8,}'
+check "US SSN"             '[0-9]{3}-[0-9]{2}-[0-9]{4}'
+check "private IP"         '(10[.][0-9]{1,3}|192[.]168|172[.](1[6-9]|2[0-9]|3[01]))[.][0-9]{1,3}[.][0-9]{1,3}'
+check "MAC address"        '([0-9a-f]{2}:){5}[0-9a-f]{2}'
+
+if [ "$fail" -ne 0 ]; then
+  echo "Commit blocked - this repo is public."
+  echo "Remove the values above, or run 'git commit --no-verify' if it is a false positive."
+  exit 1
+fi
+
+exit 0

@@ -1,0 +1,208 @@
+:root {
+  --field:      #123430;
+  --field-deep: #0C2422;
+  --bone:       #EFEBE1;
+  --bone-dim:   #A9B5AE;
+  --amber:      #E9A227;
+
+  --display: "Bricolage Grotesque", system-ui, sans-serif;
+  --body:    "Newsreader", Georgia, serif;
+  --mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  --gutter: clamp(1.5rem, 5vw, 5rem);
+  --hair:   rgba(239, 235, 225, 0.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  padding: clamp(2.5rem, 7vh, 4.5rem) var(--gutter);
+  background: radial-gradient(120% 100% at 15% 0%, var(--field) 0%, var(--field-deep) 100%);
+  color: var(--bone);
+  font-family: var(--body);
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Home is vertically centred; the projects page reads top-down. */
+body.home { display: flex; flex-direction: column; justify-content: center; }
+
+main { width: 100%; max-width: 62rem; margin: 0 auto; }
+
+/* ---- Display type ---- */
+
+.name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(3.5rem, 13vw, 10.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.045em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.name span { display: block; }
+
+/* Subpage heading: same voice, stepped down so home stays the loudest page. */
+.name--sub { font-size: clamp(3rem, 9vw, 6.5rem); }
+
+/* Caps the text column; the name is the only thing that breaks wider. */
+.rule {
+  height: 2px;
+  width: min(100%, 34rem);
+  background: var(--amber);
+  margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 clamp(1.5rem, 3vw, 2.25rem);
+  transform-origin: left center;
+}
+
+/* Matches the wider project column so the rule caps what sits beneath it. */
+.rule--wide { width: min(100%, 44rem); }
+
+/* ---- Body copy ---- */
+
+.bio { max-width: 34ch; margin: 0; color: var(--bone); }
+.bio + .bio { margin-top: 1em; }
+.bio em { font-style: italic; color: var(--bone-dim); }
+
+/* ---- Back link ---- */
+
+.back {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  text-decoration: none;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  transition: color 140ms ease;
+}
+
+.back:hover, .back:focus-visible { color: var(--amber); }
+
+/* ---- Link rows ---- */
+
+.links {
+  list-style: none;
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  max-width: 34rem;
+  border-top: 1px solid var(--hair);
+}
+
+.links li { border-bottom: 1px solid var(--hair); }
+
+.links a {
+  display: grid;
+  grid-template-columns: 7rem 1fr auto;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.8rem 0.25rem;
+  text-decoration: none;
+  color: var(--bone);
+  transition: color 140ms ease, padding-left 140ms ease;
+}
+
+.links .key {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  transition: color 140ms ease;
+}
+
+.links .val { font-family: var(--body); overflow-wrap: anywhere; }
+
+.links .arrow {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--bone-dim);
+  transition: transform 140ms ease, color 140ms ease;
+}
+
+.links a:hover,
+.links a:focus-visible { color: var(--amber); padding-left: 0.75rem; }
+
+.links a:hover .key,
+.links a:focus-visible .key { color: var(--amber); }
+
+.links a:hover .arrow,
+.links a:focus-visible .arrow { color: var(--amber); transform: translate(2px, -2px); }
+
+/* Internal links travel sideways, not out of the site. */
+.links a:hover .arrow--in,
+.links a:focus-visible .arrow--in { transform: translateX(3px); }
+
+/* ---- Projects ---- */
+
+.group { margin: 0 0 clamp(2.5rem, 6vw, 4rem); max-width: 44rem; }
+
+.group__label {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin: 0 0 1rem;
+}
+
+.projects { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hair); }
+
+.project { border-bottom: 1px solid var(--hair); padding: 1.25rem 0.25rem; }
+
+.project__title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.35rem;
+  line-height: 1.15;
+}
+
+.project__desc { margin: 0; color: var(--bone-dim); max-width: 52ch; }
+
+.group--past .project__title { color: var(--bone-dim); }
+
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; border-radius: 2px; }
+
+/* ---- Load sequence ---- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .name span, .bio, .links li, .group { animation: rise 700ms cubic-bezier(0.2, 0.7, 0.3, 1) backwards; }
+  .rule { animation: draw 800ms cubic-bezier(0.2, 0.7, 0.3, 1) backwards; }
+
+  .name span:nth-child(1) { animation-delay: 40ms; }
+  .name span:nth-child(2) { animation-delay: 120ms; }
+  .rule                   { animation-delay: 240ms; }
+  .bio                    { animation-delay: 340ms; }
+  .links li:nth-child(1)  { animation-delay: 440ms; }
+  .links li:nth-child(2)  { animation-delay: 500ms; }
+  .links li:nth-child(3)  { animation-delay: 560ms; }
+  .group:nth-of-type(1)   { animation-delay: 300ms; }
+  .group:nth-of-type(2)   { animation-delay: 380ms; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(0.6rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes draw {
+  from { opacity: 0; transform: scaleX(0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 34rem) {
+  .links a { grid-template-columns: 1fr auto; row-gap: 0.15rem; }
+  .links .key { grid-column: 1 / -1; }
+}

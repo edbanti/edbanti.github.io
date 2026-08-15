@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ed Banti</title>
+<meta name="description" content="Ed Banti — personal site.">
+<link rel="canonical" href="https://edbanti.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://edbanti.com/">
+<meta property="og:title" content="Ed Banti">
+<meta property="og:description" content="Ed Banti — personal site.">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23123430'/><text x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='700' fill='%23EFEBE1' text-anchor='middle'>E</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --field:      #123430;
+    --field-deep: #0C2422;
+    --bone:       #EFEBE1;
+    --bone-dim:   #A9B5AE;
+    --amber:      #E9A227;
+
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --body:    "Newsreader", Georgia, serif;
+    --mono:    "JetBrains Mono", ui-monospace, monospace;
+
+    --gutter: clamp(1.5rem, 5vw, 5rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2.5rem, 7vh, 4.5rem) var(--gutter);
+    background: radial-gradient(120% 100% at 15% 0%, var(--field) 0%, var(--field-deep) 100%);
+    color: var(--bone);
+    font-family: var(--body);
+    font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.25rem);
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main { width: 100%; max-width: 62rem; margin: 0 auto; }
+
+  /* ---- Name: the one bold move ---- */
+
+  .name {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3.5rem, 13vw, 10.5rem);
+    line-height: 0.85;
+    letter-spacing: -0.045em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .name span { display: block; }
+
+  /* The hairline sits on the baseline of the second word. */
+  /* Caps the text column; the name is the only thing that breaks wider. */
+  .rule {
+    height: 2px;
+    width: min(100%, 34rem);
+    background: var(--amber);
+    margin: clamp(1.25rem, 2.5vw, 1.75rem) 0 clamp(1.5rem, 3vw, 2.25rem);
+    transform-origin: left center;
+  }
+
+  /* ---- Bio ---- */
+
+  .bio {
+    max-width: 34ch;
+    margin: 0;
+    color: var(--bone);
+  }
+
+  .bio + .bio { margin-top: 1em; }
+
+  .bio em { font-style: italic; color: var(--bone-dim); }
+
+  /* ---- Links ---- */
+
+  .links {
+    list-style: none;
+    margin: clamp(2rem, 4vw, 3rem) 0 0;
+    padding: 0;
+    max-width: 34rem;
+    border-top: 1px solid rgba(239, 235, 225, 0.14);
+  }
+
+  .links li { border-bottom: 1px solid rgba(239, 235, 225, 0.14); }
+
+  .links a {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.8rem 0.25rem;
+    text-decoration: none;
+    color: var(--bone);
+    transition: color 140ms ease, padding-left 140ms ease;
+  }
+
+  .links .key {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    transition: color 140ms ease;
+  }
+
+  .links .val {
+    font-family: var(--body);
+    overflow-wrap: anywhere;
+  }
+
+  .links .arrow {
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+    color: var(--bone-dim);
+    transition: transform 140ms ease, color 140ms ease;
+  }
+
+  .links a:hover,
+  .links a:focus-visible { color: var(--amber); padding-left: 0.75rem; }
+
+  .links a:hover .key,
+  .links a:focus-visible .key { color: var(--amber); }
+
+  .links a:hover .arrow,
+  .links a:focus-visible .arrow { color: var(--amber); transform: translate(2px, -2px); }
+
+  :focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; border-radius: 2px; }
+
+  /* ---- Load sequence ---- */
+
+  @media (prefers-reduced-motion: no-preference) {
+    .name span, .bio, .links li { animation: rise 700ms cubic-bezier(0.2, 0.7, 0.3, 1) backwards; }
+    .rule { animation: draw 800ms cubic-bezier(0.2, 0.7, 0.3, 1) backwards; }
+
+    .name span:nth-child(1) { animation-delay: 40ms; }
+    .name span:nth-child(2) { animation-delay: 120ms; }
+    .rule                   { animation-delay: 240ms; }
+    .bio                    { animation-delay: 340ms; }
+    .links li:nth-child(1)  { animation-delay: 440ms; }
+    .links li:nth-child(2)  { animation-delay: 500ms; }
+    .links li:nth-child(3)  { animation-delay: 560ms; }
+    .links li:nth-child(4)  { animation-delay: 620ms; }
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(0.6rem); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes draw {
+    from { opacity: 0; transform: scaleX(0); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 34rem) {
+    .links a { grid-template-columns: 1fr auto; row-gap: 0.15rem; }
+    .links .key { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <h1 class="name"><span>Ed</span><span>Banti</span></h1>
+
+  <div class="rule" role="presentation"></div>
+
+  <!-- REPLACE: two or three sentences, plain and specific. -->
+  <p class="bio">Placeholder bio. Say who you are and what you do, in two sentences. Be specific rather than clever.</p>
+  <p class="bio"><em>Placeholder second line — optional. Where you are, or what you're working on now.</em></p>
+
+  <!-- REPLACE: delete rows you don't want, add ones you do. -->
+  <ul class="links">
+    <li>
+      <a href="https://github.com/CHANGEME" rel="me noopener">
+        <span class="key">GitHub</span>
+        <span class="val">github.com/CHANGEME</span>
+        <span class="arrow" aria-hidden="true">&#8599;</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/CHANGEME" rel="me noopener">
+        <span class="key">LinkedIn</span>
+        <span class="val">linkedin.com/in/CHANGEME</span>
+        <span class="arrow" aria-hidden="true">&#8599;</span>
+      </a>
+    </li>
+  </ul>
+</main>
+
+</body>
+</html>

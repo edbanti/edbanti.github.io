@@ -173,6 +173,46 @@ main { width: 100%; max-width: 62rem; margin: 0 auto; }
 
 .group--past .project__title { color: var(--bone-dim); }
 
+/* ---- Work ---- */
+
+.roles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hair); }
+
+.role { border-bottom: 1px solid var(--hair); padding: 1.25rem 0.25rem; }
+
+.role__title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.3rem;
+  line-height: 1.15;
+}
+
+/* Company left, dates right — the dates form a readable column down the page. */
+.role__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin: 0;
+}
+
+.role__org { color: var(--bone-dim); }
+
+.role__years {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--bone-dim);
+  white-space: nowrap;
+}
+
+.group--past .role__title { color: var(--bone-dim); }
+
+@media (max-width: 30rem) {
+  .role__meta { flex-direction: column; gap: 0.15rem; }
+}
+
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; border-radius: 2px; }
 
 /* ---- Load sequence ---- */
